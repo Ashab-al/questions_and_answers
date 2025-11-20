@@ -4,3 +4,7 @@ pydantic
 pydantic-settings
 pydantic_core
 pytest
+alembic
+asyncpg
+debugpy
+uvicorn

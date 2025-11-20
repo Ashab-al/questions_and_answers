@@ -1,5 +1,5 @@
 from models.base import Base
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, Text
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
 
@@ -20,6 +20,6 @@ class Question(Base):
     __tablename__ = "questions"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    text: Mapped[str] = mapped_column(String(1000), nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
 
-    answers = relationship("Answer", back_populates="question", cascade="all, delete-orphan") # удалить все answers при удалении вопроса
+    answers: Mapped[list["Answer"]] = relationship("Answer", back_populates="question", cascade="all, delete-orphan") # удалить все answers при удалении вопроса
