@@ -1,7 +1,8 @@
+import uuid
 from models.base import Base
-from sqlalchemy import Integer, String, ForeignKey
+from sqlalchemy import Integer, ForeignKey, Text
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-
+from sqlalchemy.dialects.postgresql import UUID
 
 class Answer(Base):
     """
@@ -21,5 +22,7 @@ class Answer(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     question_id: Mapped[int] = mapped_column(Integer, ForeignKey("questions.id"))
+    user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
 
-    question = relationship("Question", back_populates="answers", nullable=False)
+    question: Mapped["Question"] = relationship("Question", back_populates="answers")
