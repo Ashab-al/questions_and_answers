@@ -1,6 +1,6 @@
 from unittest.mock import AsyncMock
 import pytest
-from services.questions.create_question import create_questions
+from services.questions.create_question import create_question
 from schemas.questions.create.request import CreateQuestionRequest
 from models.question import Question
 
@@ -11,8 +11,8 @@ async def test_create_question():
     question_text = "Какой-то вопрос"
     question_data = CreateQuestionRequest(text=question_text)
 
-    question: Question = await create_questions(
-        session=mock_db, create_question=question_data
+    question: Question = await create_question(
+        session=mock_db, new_question=question_data
     )
 
     mock_db.commit.assert_awaited_once()

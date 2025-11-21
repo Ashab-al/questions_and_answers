@@ -1,11 +1,11 @@
 from typing import Annotated
 
 from database import get_async_session
-from fastapi import APIRouter, Depends, HTTPException, Body
+from fastapi import APIRouter, Depends, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 from schemas.questions.create.request import CreateQuestionRequest
 from schemas.questions.create.response import CreateQuestionResponse
-from services.questions.create_question import create_questions
+from services.questions.create_question import create_question
 
 
 router = APIRouter()
@@ -17,16 +17,33 @@ router = APIRouter()
 )
 async def create(
     session: Annotated[AsyncSession, Depends(get_async_session)],
-    create_question: Annotated[CreateQuestionRequest, Body()],
+    question: Annotated[CreateQuestionRequest, Body()],
 ):
-    question = await create_questions(
+    """
+    Эндпоинт для создания нового вопроса.
+
+    Принимает текст вопроса, сохраняет его в базе данных и возвращает объект с данными созданного вопроса.
+
+    Args:
+        session (AsyncSession): Асинхронная сессия SQLAlchemy, предоставляемая через зависимость.
+        create_question (CreateQuestionRequest): Тело запроса, содержащее данные для создания вопроса.
+            Ожидается JSON с полем `text` (текст вопроса).
+
+    Returns:
+        CreateQuestionResponse: Объект с информацией о созданном вопросе, включая:
+            - `id`: Уникальный идентификатор вопроса.
+            - `text`: Текст вопроса.
+            - `created_at`: Время создания.
+            - `updated_at`: Время последнего обновления (совпадает с `created_at` при создании).
+    """
+    new_question = await create_question(
         session=session,
-        create_question=create_question,
+        create_question=question,
     )
 
     return CreateQuestionResponse(
-        id=question.id,
-        text=question.text,
-        created_at=question.created_at,
-        updated_at=question.updated_at
+        id=new_question.id,
+        text=new_question.text,
+        created_at=new_question.created_at,
+        updated_at=new_question.updated_at
     )
