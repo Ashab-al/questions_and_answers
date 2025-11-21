@@ -10,13 +10,22 @@ from services.questions.list_questions import list_questions
 router = APIRouter()
 @router.get(
     "/",
-    summary="Возвращает список всех вопросов",
+    summary="Получить список всех вопросов",
     description="Возвращает список всех вопросов в базе данных.",
     response_model=ListQuestionsResponse,
 )
 async def questions_list(
     session: Annotated[AsyncSession, Depends(get_async_session)],
 ):
+    """
+    Получить список всех вопросов
+
+    Args:
+        session (AsyncSession): Асинхронная сессия SQLAlchemy для работы с базой данных.
+
+    Returns:
+        ListQuestionsResponse: Объект, содержащий список всех вопросов
+    """
     questions = await list_questions(session)
-    print(questions)
+
     return ListQuestionsResponse(questions=questions)
