@@ -10,7 +10,7 @@ class Answer(BaseModel):
     user_id: str = Field(..., examples=["550e8400-e29b-41d4-a716-446655440000"], description="ID пользователя, создавшего ответ")
     text: str = Field(..., examples=[["Какой-то ответ"]], description="Текст ответа")
 
-class Question(BaseModel):
+class ShowQuestionResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int = Field(..., examples=[1], description="ID вопроса")
@@ -18,6 +18,3 @@ class Question(BaseModel):
     updated_at: datetime = Field(..., description="Время последнего обновления вопроса")
     text: str = Field(..., examples=[["Какой-то вопрос"]], description="Текст вопроса")
     answers: list[Answer] = Field(..., description="Список ответов на вопрос")
-
-class ListQuestionsResponse(BaseModel):
-    questions: list[Question] = Field(..., description="Список вопросов")
