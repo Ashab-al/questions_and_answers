@@ -38,7 +38,7 @@ async def create(
     """
     new_question = await create_question(
         session=session,
-        create_question=question,
+        new_question=question,
     )
 
     return CreateQuestionResponse(
