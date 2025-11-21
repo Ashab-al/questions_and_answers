@@ -11,7 +11,12 @@ from api.questions import create as questions_create_module
 from api.questions import destroy as questions_destroy_module
 from api.questions import list as questions_list_module
 from api.questions import show as questions_show_module
+from api.questions.answers import create as questions_answers_create_module
 
+# Добавляем импорт модули Answers
+from api.answers import router as answers_router
+from api.answers import show as answers_show_module
+from api.answers import destroy as answers_destroy_module
 
 from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
@@ -32,8 +37,9 @@ async def app(session_mock: AsyncMock) -> FastAPI:  # noqa: W0621
     new_app.include_router(
         await remove_response_model_in_router(questions_router), prefix="/questions"
     )
-
-
+    new_app.include_router(
+        await remove_response_model_in_router(answers_router), prefix="/answers"
+    )
 
     async def _override_get_async_session():
         """Мокаем зависимость get_async_session"""
@@ -42,16 +48,23 @@ async def app(session_mock: AsyncMock) -> FastAPI:  # noqa: W0621
     new_app.dependency_overrides[questions_create_module.get_async_session] = (
         _override_get_async_session
     )
-
     new_app.dependency_overrides[questions_destroy_module.get_async_session] = (
         _override_get_async_session
     )
-
     new_app.dependency_overrides[questions_list_module.get_async_session] = (
         _override_get_async_session
     )
-
     new_app.dependency_overrides[questions_show_module.get_async_session] = (
+        _override_get_async_session
+    )
+    new_app.dependency_overrides[questions_answers_create_module.get_async_session] = (
+        _override_get_async_session
+    )
+
+    new_app.dependency_overrides[answers_show_module.get_async_session] = (
+        _override_get_async_session
+    )
+    new_app.dependency_overrides[answers_destroy_module.get_async_session] = (
         _override_get_async_session
     )
 
