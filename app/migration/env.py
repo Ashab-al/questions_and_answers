@@ -10,8 +10,8 @@ from logging.config import fileConfig
 from alembic import context
 from database import database_url
 from models.base import Base
-from models.answer import Answer
 from models.question import Question
+from models.answer import Answer
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config

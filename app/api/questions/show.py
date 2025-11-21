@@ -11,6 +11,7 @@ router = APIRouter()
     description="Возвращает вопрос по его ID вместе со всеми связанными ответами.",
 )
 async def show_question(
+    session: Annotated[AsyncSession, Depends(get_async_session)],
     question_id: Annotated[int, Path()],
 ):
     ...

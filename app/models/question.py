@@ -1,7 +1,7 @@
 from models.base import Base
-from sqlalchemy import Integer, String, Text
+from models.answer import Answer
+from sqlalchemy import Integer, Text
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-
 
 class Question(Base):
     """

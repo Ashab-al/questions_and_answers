@@ -10,5 +10,5 @@ router = APIRouter()
     summary="Возвращает список всех вопросов",
     description="Возвращает список всех вопросов в базе данных.",
 )
-async def list_questions():
+async def list_questions(session: Annotated[AsyncSession, Depends(get_async_session)],):
     ...

@@ -10,5 +10,8 @@ router = APIRouter()
     summary="Удалить вопрос",
     description="Удаляет вопрос по его ID из базы данных.",
 )
-async def create_questions(question_id: Annotated[int, Path()]):
+async def create_questions(
+    session: Annotated[AsyncSession, Depends(get_async_session)],
+    question_id: Annotated[int, Path()]
+):
     ...
