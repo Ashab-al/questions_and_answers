@@ -1,13 +1,15 @@
 from pydantic import BaseModel
 from pydantic import Field, ConfigDict
 from datetime import datetime
+import uuid
+
 
 class Answer(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int = Field(..., examples=[1], description="ID ответа")
     question_id: int = Field(..., examples=[1], description="ID вопроса, к которому относится ответ")
-    user_id: str = Field(..., examples=["550e8400-e29b-41d4-a716-446655440000"], description="ID пользователя, создавшего ответ")
+    user_id: uuid.UUID = Field(..., examples=[str(uuid.uuid4())], description="ID пользователя, создавшего ответ")
     text: str = Field(..., examples=[["Какой-то ответ"]], description="Текст ответа")
 
 class Question(BaseModel):
