@@ -11,7 +11,7 @@ from api.questions import create as questions_create_module
 from api.questions import destroy as questions_destroy_module
 from api.questions import list as questions_list_module
 from api.questions import show as questions_show_module
-
+from api.questions.answers import create as questions_answers_create_module
 
 from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
@@ -52,6 +52,9 @@ async def app(session_mock: AsyncMock) -> FastAPI:  # noqa: W0621
     )
 
     new_app.dependency_overrides[questions_show_module.get_async_session] = (
+        _override_get_async_session
+    )
+    new_app.dependency_overrides[questions_answers_create_module.get_async_session] = (
         _override_get_async_session
     )
 
