@@ -1,0 +1,13 @@
+fastapi
+SQLAlchemy
+pydantic
+pydantic-settings
+pydantic_core
+pytest
+pytest-asyncio
+pytest-mock
+httpx
+alembic
+asyncpg
+debugpy
+uvicorn
