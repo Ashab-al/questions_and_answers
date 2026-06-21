@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:latest
     volumes:
-      - tg_bot_db_data:/var/lib/postgresql/data
+      - tg_bot_db_data:/var/lib/postgresql
     ports:
       - "${DB_PORT}:5432"
     environment:

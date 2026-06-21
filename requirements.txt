@@ -11,3 +11,4 @@ alembic
 asyncpg
 debugpy
 uvicorn
+strawberry-graphql[fastapi]
